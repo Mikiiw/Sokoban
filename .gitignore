@@ -350,3 +350,7 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
