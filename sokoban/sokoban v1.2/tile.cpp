@@ -1,14 +1,18 @@
 #include <iostream>
 #include "tile.h"
 
-tile::tile() {}
+tile::tile(int width, int height, int type){
+	tile::width = width;
+	tile::height = height;
+	tile::type = type;
+}
 
 tile::~tile() {}
 
 	
 	void tile::setwidth(int input) {
 		std::cout << "width set";
-		//width = input;
+		width = input;
 	}
 
 	float tile::getwidth() {
@@ -17,7 +21,7 @@ tile::~tile() {}
 
 	void tile::setheight(int input) {
 		std::cout << "width set";
-		//height = input;
+		height = input;
 	}
 
 	float tile::getheight() {

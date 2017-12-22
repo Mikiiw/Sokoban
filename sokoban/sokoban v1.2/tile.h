@@ -7,7 +7,7 @@ private:
 	int type;
 
 public:
-	tile();
+	tile(int width, int height, int type);
 	~tile();
 	
 	void tile::setwidth(int input);
