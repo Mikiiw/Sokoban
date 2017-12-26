@@ -6,6 +6,7 @@ private:
 						   0, 0, 0, 0 };
 	int width;
 	int height;
+
 public:
 	Map();
 	~Map();
