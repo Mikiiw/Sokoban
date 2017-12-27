@@ -5,6 +5,7 @@ using namespace std;
 #include "tile.h"
 #include "Map.h"
 #include "Gameengine.h"
+#include "GameStateMenu.h"
 
 int main() {
 	//sf::RenderWindow window(sf::VideoMode(1280, 720), "Title");
@@ -25,6 +26,7 @@ int main() {
 	//Engine loop
 	Gameengine* sokobanengine = new Gameengine();
 	sokobanengine->initialise();
+	sokobanengine->pushState(new GameStateMenu(sokobanengine));
 	sokobanengine->loop();
 
 	//}

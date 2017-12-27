@@ -2,23 +2,29 @@
 #define _GAMEENGINE_H
 
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include <stack>
+
+class GameState;
 
 class Gameengine {
 private:
-	sf::RenderWindow* Gamewindow;
-	sf::RectangleShape Player;
-	std::vector<sf::RectangleShape> tilelist;
+	
 
 
 public:
+	std::stack<GameState*> states;
+	sf::RenderWindow* Gamewindow;
+
 	Gameengine();
 	~Gameengine();
 
+	void pushState(GameState* state);
+	void popState();
+	void changeState(GameState* state);
+	GameState* peekState();
+
 	void initialise();
-	void createPlayer();
 	void loop();
-	void drawMap();
 
 };
 
