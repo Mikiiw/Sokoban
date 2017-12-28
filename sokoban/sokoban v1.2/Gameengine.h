@@ -1,5 +1,5 @@
-#ifndef _GAMEENGINE_H
-#define _GAMEENGINE_H
+#ifndef _GAME_ENGINE_H
+#define _GAME_ENGINE_H
 
 #include <SFML/Graphics.hpp>
 #include <stack>
@@ -12,7 +12,9 @@ private:
 
 
 public:
+	// Handles stack of game states
 	std::stack<GameState*> states;
+	// Handles GUI window
 	sf::RenderWindow* Gamewindow;
 
 	Gameengine();
@@ -23,7 +25,6 @@ public:
 	void changeState(GameState* state);
 	GameState* peekState();
 
-	void initialise();
 	void loop();
 
 };

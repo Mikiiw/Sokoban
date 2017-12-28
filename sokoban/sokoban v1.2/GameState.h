@@ -5,7 +5,7 @@
 
 class GameState {
 public:
-	Gameengine* game;
+	Gameengine* gameengine;
 
 	virtual void draw() = 0;
 	virtual void update() = 0;

@@ -10,13 +10,13 @@ void GameStatePlay::createPlayer() {
 }
 
 void GameStatePlay::drawMap() {
-	//useless rn
+	//Only draws a fixed map as of right now, its going to pull from multiple maps
 	tilelist = std::vector<sf::RectangleShape>(16);
 	//Map* level1 = new Map();
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++) {
 			tilelist[(4 * i) + j] = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
-			tilelist[(4 * i) + j].setPosition((i)*50.0f, (j)*50.0f);
+			tilelist[(4 * i) + j].setPosition(i * 50.0f, j * 50.0f);
 			//Stripe Pattern
 			if ((j + i) % 2 == 0)
 				tilelist[(4 * i) + j].setFillColor(sf::Color::Blue);
@@ -27,17 +27,17 @@ void GameStatePlay::drawMap() {
 
 void GameStatePlay::draw() {
 	/*reset screen*/
-	game->Gamewindow->clear();
+	gameengine->Gamewindow->clear();
 
 	// Set this as current view
-	game->Gamewindow->setView(this->view);
+	gameengine->Gamewindow->setView(this->view);
 
 	//color tiles
 	for (int i = 0; i < 16; i++) {
-		game->Gamewindow->draw(tilelist[i]);
+		gameengine->Gamewindow->draw(tilelist[i]);
 	}
-	game->Gamewindow->draw(GameStatePlay::Player);
-	game->Gamewindow->display();
+	gameengine->Gamewindow->draw(GameStatePlay::Player);
+	gameengine->Gamewindow->display();
 }
 
 void GameStatePlay::update() {
@@ -47,10 +47,10 @@ void GameStatePlay::update() {
 void GameStatePlay::handleInput() {
 	sf::Event event;
 
-	while (game->Gamewindow->pollEvent(event)) {
+	while (gameengine->Gamewindow->pollEvent(event)) {
 		switch (event.type) {
 		case sf::Event::Closed:
-			game->Gamewindow->close();
+			gameengine->Gamewindow->close();
 			break;
 		case sf::Event::Resized:
 			std::cout << "New Width: " << event.size.width << " New Height: " << event.size.height << std::endl;
@@ -82,7 +82,7 @@ void GameStatePlay::handleInput() {
 }
 
 GameStatePlay::GameStatePlay(Gameengine* game) {
-	this->game = game;
+	this->gameengine = game;
 	float zoom = 0.5f; // Zoom out to double size
 	
 	sf::Vector2f pos = sf::Vector2f(game->Gamewindow->getSize());

@@ -10,8 +10,15 @@ class GameStateMenu : public GameState {
 private:
 	sf::View view;
 	sf::RectangleShape startButton;
+	sf::RectangleShape optionButton;
+	sf::RectangleShape exitButton;
+	sf::Text startbuttontext;
+	sf::Text optionbuttontext;
+	sf::Text exitbuttontext;
+	sf::Font font;
 
 	void startGame();
+	void gotoOption();
 
 public:
 	virtual void draw();

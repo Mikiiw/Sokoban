@@ -5,9 +5,14 @@
 #include "GameState.h"
 #include "Map.h"
 #include <SFML/Graphics.hpp>
+#include "GameStateMenu.h"
 
 Gameengine::Gameengine() {
-
+	// Default Renderwindow
+	Gameengine::Gamewindow = new sf::RenderWindow(sf::VideoMode(400, 400), "Sokoban", sf::Style::Close | sf::Style::Resize);
+	// Defaults Game Menu to top of engine
+	pushState(new GameStateMenu(this));
+	return;
 }
 
 /** ~Gameengine
@@ -15,15 +20,8 @@ Gameengine::Gameengine() {
 */
 Gameengine::~Gameengine() {
 	while (!this->states.empty()) popState();
+	return;
 }
-
-
-
-void Gameengine::initialise() {
-	
-	Gameengine::Gamewindow = new sf::RenderWindow(sf::VideoMode(400, 400), "Sokoban", sf::Style::Close | sf::Style::Resize);
-}
-
 
 /**** GAME STATE STACK ****/
 
@@ -67,8 +65,8 @@ GameState* Gameengine::peekState() {
 
 /**** /GAME STATE STACK ****/
 
-
 void Gameengine::loop() {
+
 
 	while (Gamewindow->isOpen())
 	{
@@ -81,4 +79,5 @@ void Gameengine::loop() {
 		peekState()->draw();
 
 	}
+	return;
 }
