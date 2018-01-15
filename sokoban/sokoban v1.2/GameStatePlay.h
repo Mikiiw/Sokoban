@@ -20,6 +20,7 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void handleInput();
+	virtual void handleMovement(sf::Event event);
 
 	GameStatePlay(Gameengine *game);
 };
