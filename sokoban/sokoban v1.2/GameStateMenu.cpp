@@ -45,6 +45,20 @@ void GameStateMenu::highlightItems(sf::Vector2f mousePos) {
 		this->startButton.setFillColor(sf::Color(255, 255, 255));
 	}
 
+	if (this->optionButton.getGlobalBounds().contains(mousePos)) {
+		this->optionButton.setFillColor(sf::Color(100, 250, 250));
+	}
+	else {
+		this->optionButton.setFillColor(sf::Color(255, 255, 255));
+	}
+
+	if (this->exitButton.getGlobalBounds().contains(mousePos)) {
+		this->exitButton.setFillColor(sf::Color(100, 250, 250));
+	}
+	else {
+		this->exitButton.setFillColor(sf::Color(255, 255, 255));
+	}
+
 	return;
 }
 

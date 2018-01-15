@@ -11,7 +11,7 @@ class GameStateOption : public GameState {
 private:
 	sf::View view;
 	sf::Font font;
-	sf::RectangleShape optionButton;
+	sf::RectangleShape backButton;
 
 	void goBack();
 
@@ -20,6 +20,7 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void handleInput();
+
 
 	std::string getClickedItem(sf::Vector2f mousePos);
 	void highlightItems(sf::Vector2f mousePos);

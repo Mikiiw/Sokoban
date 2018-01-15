@@ -11,7 +11,9 @@ Gameengine::Gameengine() {
 	// Default Renderwindow
 	Gameengine::Gamewindow = new sf::RenderWindow(sf::VideoMode(400, 400), "Sokoban", sf::Style::Close | sf::Style::Resize);
 	// Defaults Game Menu to top of engine
+	this->getPeekstate();
 	pushState(new GameStateMenu(this));
+	Gamewindow->setFramerateLimit(60);
 	return;
 }
 
@@ -38,7 +40,8 @@ void Gameengine::pushState(GameState* state) {
 * Pop state from state stack
 */
 void Gameengine::popState() {
-	delete this->states.top();
+	// Learn to destruct things
+//	delete this->states.top();
 	this->states.pop();
 	return;
 }
@@ -64,6 +67,11 @@ GameState* Gameengine::peekState() {
 }
 
 /**** /GAME STATE STACK ****/
+
+void Gameengine::getPeekstate() {
+	std::cout << "states.size() is " << states.size() << '\n';
+	return;
+}
 
 void Gameengine::loop() {
 

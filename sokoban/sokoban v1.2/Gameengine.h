@@ -24,6 +24,7 @@ public:
 	void popState();
 	void changeState(GameState* state);
 	GameState* peekState();
+	void Gameengine::getPeekstate();
 
 	void loop();
 
