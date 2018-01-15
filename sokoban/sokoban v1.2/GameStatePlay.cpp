@@ -5,6 +5,8 @@
 #include "GameState.h"
 
 int tileSize = 50.0f;
+int mapWidth = 8;
+int mapHeight = 8;
 
 void GameStatePlay::createPlayer() {
 	GameStatePlay::Player = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
@@ -15,15 +17,15 @@ void GameStatePlay::drawMap() {
 	//Only draws a fixed map as of right now, its going to pull from multiple maps
 	tilelist = std::vector<sf::RectangleShape>(64);
 	//Map* level1 = new Map();
-	for (int i = 0; i < 8; i++)
-		for (int j = 0; j < 8; j++) {
-			tilelist[(8 * i) + j] = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
-			tilelist[(8 * i) + j].setPosition(i * tileSize, j * tileSize);
+	for (int i = 0; i < mapWidth; i++)
+		for (int j = 0; j < mapHeight; j++) {
+			tilelist[(mapWidth * i) + j] = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
+			tilelist[(mapWidth * i) + j].setPosition(i * tileSize, j * tileSize);
 			//Stripe Pattern
 			if ((j + i) % 2 == 0)
-				tilelist[(8 * i) + j].setFillColor(sf::Color::Blue);
+				tilelist[(mapWidth * i) + j].setFillColor(sf::Color::Blue);
 			else
-				tilelist[(8 * i) + j].setFillColor(sf::Color::Green);
+				tilelist[(mapWidth * i) + j].setFillColor(sf::Color::Green);
 		}
 }
 
@@ -35,7 +37,7 @@ void GameStatePlay::draw() {
 	gameengine->Gamewindow->setView(this->view);
 
 	//color tiles
-	for (int i = 0; i < 64; i++) {
+	for (int i = 0; i < (mapWidth * mapHeight); i++) {
 		gameengine->Gamewindow->draw(tilelist[i]);
 	}
 	gameengine->Gamewindow->draw(GameStatePlay::Player);
@@ -72,16 +74,24 @@ void GameStatePlay::handleInput() {
 void GameStatePlay::handleMovement(sf::Event event) {
 	switch (event.key.code) {
 		case sf::Keyboard::A:
-			Player.move(-1 * tileSize, 0.0f);
+		case sf::Keyboard::Left:
+			if (Player.getPosition().x > 0)
+				Player.move(-1 * tileSize, 0.0f);
 			break;
 		case sf::Keyboard::W:
-			Player.move(0.0f, -1 * tileSize);
+		case sf::Keyboard::Up:
+			if (Player.getPosition().y > 0)
+				Player.move(0.0f, -1 * tileSize);
 			break;
 		case sf::Keyboard::D:
-			Player.move(tileSize, 0.0f);
+		case sf::Keyboard::Right:
+			if (Player.getPosition().x + tileSize < mapWidth * tileSize)
+				Player.move(tileSize, 0.0f);
 			break;
 		case sf::Keyboard::S:
-			Player.move(0.0f, tileSize);
+		case sf::Keyboard::Down:
+			if (Player.getPosition().y + tileSize < mapHeight * tileSize)
+				Player.move(0.0f, tileSize);
 			break;
 	}
 }
