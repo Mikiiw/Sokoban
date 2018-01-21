@@ -6,9 +6,10 @@
 #include "GameStatePlay.h"
 #include "GameStateOption.h"
 #include "GameState.h"
+#include "GameStateSelect.h"
 
 void GameStateMenu::startGame() {
-	gameengine->pushState(new GameStatePlay(this->gameengine));
+	gameengine->pushState(new GameStateSelect(this->gameengine));
 	return;
 }
 
@@ -23,6 +24,8 @@ void GameStateMenu::draw() {
 
 	gameengine->Gamewindow->draw(GameStateMenu::startButton);
 	gameengine->Gamewindow->draw(GameStateMenu::startbuttontext);
+	gameengine->Gamewindow->draw(GameStateMenu::editorButton);
+	gameengine->Gamewindow->draw(GameStateMenu::editorbuttontext);
 	gameengine->Gamewindow->draw(GameStateMenu::optionButton);
 	gameengine->Gamewindow->draw(GameStateMenu::optionbuttontext);
 	gameengine->Gamewindow->draw(GameStateMenu::exitButton);
@@ -43,6 +46,13 @@ void GameStateMenu::highlightItems(sf::Vector2f mousePos) {
 		this->startButton.setFillColor(sf::Color(100, 250, 250));
 	} else {
 		this->startButton.setFillColor(sf::Color(255, 255, 255));
+	}
+
+	if (this->editorButton.getGlobalBounds().contains(mousePos)) {
+		this->editorButton.setFillColor(sf::Color(100, 250, 250));
+	}
+	else {
+		this->editorButton.setFillColor(sf::Color(255, 255, 255));
 	}
 
 	if (this->optionButton.getGlobalBounds().contains(mousePos)) {
@@ -126,17 +136,23 @@ GameStateMenu::GameStateMenu(Gameengine* game) {
 	GameStateMenu::startButton.setOutlineThickness(2.0f);
 	GameStateMenu::startButton.setPosition(sf::Vector2f(100.0f, 184.0f));
 
+	GameStateMenu::editorButton = sf::RectangleShape(sf::Vector2f(200.0f, 32.0f));
+	GameStateMenu::editorButton.setFillColor(sf::Color::White);
+	GameStateMenu::editorButton.setOutlineColor(sf::Color(200, 200, 200));
+	GameStateMenu::editorButton.setOutlineThickness(2.0f);
+	GameStateMenu::editorButton.setPosition(sf::Vector2f(100.0f, 224.0f));
+
 	GameStateMenu::optionButton = sf::RectangleShape(sf::Vector2f(200.0f, 32.0f));
 	GameStateMenu::optionButton.setFillColor(sf::Color::White);
 	GameStateMenu::optionButton.setOutlineColor(sf::Color(200, 200, 200));
 	GameStateMenu::optionButton.setOutlineThickness(2.0f);
-	GameStateMenu::optionButton.setPosition(sf::Vector2f(100.0f, 224.0f));
+	GameStateMenu::optionButton.setPosition(sf::Vector2f(100.0f, 264.0f));
 
 	GameStateMenu::exitButton = sf::RectangleShape(sf::Vector2f(200.0f, 32.0f));
 	GameStateMenu::exitButton.setFillColor(sf::Color::White);
 	GameStateMenu::exitButton.setOutlineColor(sf::Color(200, 200, 200));
 	GameStateMenu::exitButton.setOutlineThickness(2.0f);
-	GameStateMenu::exitButton.setPosition(sf::Vector2f(100.0f, 264.0f));
+	GameStateMenu::exitButton.setPosition(sf::Vector2f(100.0f, 304.0f));
 
 	// test
 	if (!font.loadFromFile("arial.ttf"))
@@ -148,17 +164,23 @@ GameStateMenu::GameStateMenu(Gameengine* game) {
 	GameStateMenu::startbuttontext.setColor(sf::Color::Red);
 	GameStateMenu::startbuttontext.setPosition(sf::Vector2f(100.0f, 184.0f));
 
+	GameStateMenu::editorbuttontext.setFont(font);
+	GameStateMenu::editorbuttontext.setString("Level Editor");
+	GameStateMenu::editorbuttontext.setCharacterSize(20);
+	GameStateMenu::editorbuttontext.setColor(sf::Color::Red);
+	GameStateMenu::editorbuttontext.setPosition(sf::Vector2f(100.0f, 224.0f));
+
 	GameStateMenu::optionbuttontext.setFont(font);
 	GameStateMenu::optionbuttontext.setString("Options");
 	GameStateMenu::optionbuttontext.setCharacterSize(20);
 	GameStateMenu::optionbuttontext.setColor(sf::Color::Red);
-	GameStateMenu::optionbuttontext.setPosition(sf::Vector2f(100.0f, 224.0f));
+	GameStateMenu::optionbuttontext.setPosition(sf::Vector2f(100.0f, 264.0f));
 
 	GameStateMenu::exitbuttontext.setFont(font);
 	GameStateMenu::exitbuttontext.setString("Exit");
 	GameStateMenu::exitbuttontext.setCharacterSize(20);
 	GameStateMenu::exitbuttontext.setColor(sf::Color::Red);
-	GameStateMenu::exitbuttontext.setPosition(sf::Vector2f(100.0f, 264.0f));
+	GameStateMenu::exitbuttontext.setPosition(sf::Vector2f(100.0f, 304.0f));
 
 
 

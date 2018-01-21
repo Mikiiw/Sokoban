@@ -9,22 +9,33 @@ int tileSize = 50.0f;
 void GameStatePlay::createPlayer() {
 	GameStatePlay::Player = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
 	GameStatePlay::Player.setFillColor(sf::Color::White);
+	GameStatePlay::Player.setPosition(150.0f, 150.0f);
+	playertexture.loadFromFile("PNG/Character4.png");
+	GameStatePlay::Player.setTexture(&playertexture);
+
 }
 
 void GameStatePlay::drawMap() {
 	//Only draws a fixed map as of right now, its going to pull from multiple maps
 	tilelist = std::vector<sf::RectangleShape>(64);
+
+	GameStatePlay::walltexture.loadFromFile("PNG/Wall_Black.png");
+	GameStatePlay::groundtexture.loadFromFile("PNG/GroundGravel_Concrete.png");
+
+
 	//Map* level1 = new Map();
 	for (int i = 0; i < 8; i++)
 		for (int j = 0; j < 8; j++) {
 			tilelist[(8 * i) + j] = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
 			tilelist[(8 * i) + j].setPosition(i * tileSize, j * tileSize);
-			//Stripe Pattern
-			if ((j + i) % 2 == 0)
-				tilelist[(8 * i) + j].setFillColor(sf::Color::Blue);
+			//Wall Pattern
+			if (i == 0 || i == 7 || j == 0 || j == 7) 
+				tilelist[(8 * i) + j].setTexture(&walltexture);
 			else
-				tilelist[(8 * i) + j].setFillColor(sf::Color::Green);
+				tilelist[(8 * i) + j].setTexture(&groundtexture);
 		}
+
+
 }
 
 void GameStatePlay::draw() {
@@ -69,20 +80,83 @@ void GameStatePlay::handleInput() {
 	}
 }
 
+bool GameStatePlay::checkMove(int move){
+	int i;
+	int j;
+	switch (move) {
+	case 1:
+		i = (Player.getPosition().x / tileSize) - 1;
+		j = (Player.getPosition().y / tileSize);
+		playertexture.loadFromFile("PNG/Character1.png");
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}else
+//		std::cout << "moveleft";
+		break;
+	case 2:
+		i = (Player.getPosition().x / tileSize);
+		j = (Player.getPosition().y / tileSize) - 1;
+		playertexture.loadFromFile("PNG/Character7.png");
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}
+		else
+			//		std::cout << "moveup";
+			break;
+	case 3:
+		i = (Player.getPosition().x / tileSize) + 1;
+		j = (Player.getPosition().y / tileSize);
+		playertexture.loadFromFile("PNG/Character2.png");
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}
+		else
+			//		std::cout << "moveright";
+			break;
+	case 4:
+		i = (Player.getPosition().x / tileSize);
+		j = (Player.getPosition().y / tileSize) + 1;
+		playertexture.loadFromFile("PNG/Character4.png");
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}
+		else
+			//		std::cout << "movedown";
+			break;
+	}
+	return true;
+}
+
+void GameStatePlay::moveBox()
+{
+}
+
 void GameStatePlay::handleMovement(sf::Event event) {
 	switch (event.key.code) {
-		case sf::Keyboard::A:
+	case sf::Keyboard::A:
+		if (checkMove(1) == false) {}
+		else
 			Player.move(-1 * tileSize, 0.0f);
-			break;
-		case sf::Keyboard::W:
-			Player.move(0.0f, -1 * tileSize);
-			break;
-		case sf::Keyboard::D:
+		break;
+	case sf::Keyboard::W:
+		if (checkMove(2) == false) {}
+		else
+		Player.move(0.0f, -1 * tileSize);
+		break;
+	case sf::Keyboard::D:
+		if (checkMove(3) == false) {}
+		else
 			Player.move(tileSize, 0.0f);
-			break;
-		case sf::Keyboard::S:
+		break;
+	case sf::Keyboard::S:
+		if (checkMove(4) == false) {}
+		else
 			Player.move(0.0f, tileSize);
-			break;
+		break;
 	}
 }
 

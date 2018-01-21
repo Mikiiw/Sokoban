@@ -11,9 +11,16 @@ private:
 	sf::View view;
 	std::vector<sf::RectangleShape> tilelist;
 	sf::RectangleShape Player;
+	sf::Texture walltexture;
+	sf::Texture playertexture;
+	sf::Texture groundtexture;
 
 	void createPlayer();
 	void drawMap();
+	bool checkMove(int move);
+	void moveBox();
+	void nextLevel();
+
 
 public:
 

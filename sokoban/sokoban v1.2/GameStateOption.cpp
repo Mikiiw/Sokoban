@@ -113,3 +113,7 @@ GameStateOption::GameStateOption(Gameengine* game) {
 
 
 }
+
+GameStateOption::~GameStateOption() {
+
+}

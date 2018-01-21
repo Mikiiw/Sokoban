@@ -25,6 +25,7 @@ public:
 	std::string getClickedItem(sf::Vector2f mousePos);
 	void highlightItems(sf::Vector2f mousePos);
 	GameStateOption(Gameengine *game);
+	~GameStateOption();
 };
 
 #endif /* GAME_STATE_OPTION_H */

@@ -1,26 +1,23 @@
-#ifndef GAME_STATE_MENU_H
-#define GAME_STATE_MENU_H
+#ifndef GAME_STATE_SELECT_H
+#define GAME_STATE_SELECT_H
 
 #include <SFML/Graphics.hpp>
 #include <string>
 
 #include "GameState.h"
 
-class GameStateMenu : public GameState {
+class GameStateSelect : public GameState {
 private:
 	sf::View view;
 	sf::RectangleShape startButton;
-	sf::RectangleShape editorButton;
 	sf::RectangleShape optionButton;
 	sf::RectangleShape exitButton;
 	sf::Text startbuttontext;
-	sf::Text editorbuttontext;
 	sf::Text optionbuttontext;
 	sf::Text exitbuttontext;
 	sf::Font font;
 
 	void startGame();
-	void gotoOption();
 
 public:
 	virtual void draw();
@@ -30,7 +27,8 @@ public:
 	std::string getClickedItem(sf::Vector2f mousePos);
 	void highlightItems(sf::Vector2f mousePos);
 
-	GameStateMenu(Gameengine *game);
+	GameStateSelect(Gameengine *game);
 };
 
 #endif /* GAME_STATE_MENU_H */
+#pragma once

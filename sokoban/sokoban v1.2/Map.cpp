@@ -5,6 +5,6 @@
 Map::Map() {}
 Map::~Map() {}
 
-void Map::drawmap(int x, int y, int value) {
-	Map::tilelist[x][y] = value;
+void Map::getMap(int x, int y, int value) {
+
 }
