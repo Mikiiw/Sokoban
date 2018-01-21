@@ -5,6 +5,8 @@
 #include "GameState.h"
 
 int tileSize = 50.0f;
+int mapWidth = 8;
+int mapHeight = 8;
 
 void GameStatePlay::createPlayer() {
 	GameStatePlay::Player = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
@@ -24,8 +26,8 @@ void GameStatePlay::drawMap() {
 
 
 	//Map* level1 = new Map();
-	for (int i = 0; i < 8; i++)
-		for (int j = 0; j < 8; j++) {
+	for (int i = 0; i < mapWidth; i++)
+		for (int j = 0; j < mapHeight; j++) {
 			tilelist[(8 * i) + j] = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
 			tilelist[(8 * i) + j].setPosition(i * tileSize, j * tileSize);
 			//Wall Pattern
@@ -46,7 +48,7 @@ void GameStatePlay::draw() {
 	gameengine->Gamewindow->setView(this->view);
 
 	//color tiles
-	for (int i = 0; i < 64; i++) {
+	for (int i = 0; i < (mapWidth*mapHeight); i++) {
 		gameengine->Gamewindow->draw(tilelist[i]);
 	}
 	gameengine->Gamewindow->draw(GameStatePlay::Player);
