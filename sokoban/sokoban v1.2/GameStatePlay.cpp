@@ -10,11 +10,20 @@ int mapHeight = 8;
 
 void GameStatePlay::createPlayer() {
 	GameStatePlay::Player = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
-	GameStatePlay::Player.setFillColor(sf::Color::White);
 	GameStatePlay::Player.setPosition(150.0f, 150.0f);
 	playertexture.loadFromFile("PNG/Character4.png");
 	GameStatePlay::Player.setTexture(&playertexture);
 
+	return;
+}
+
+void GameStatePlay::createBox() {
+	GameStatePlay::Box = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
+	GameStatePlay::Box.setPosition(200.0f, 200.0f);
+	boxtexture.loadFromFile("PNG/Crate_Beige.png");
+	GameStatePlay::Box.setTexture(&boxtexture);
+
+	return;
 }
 
 void GameStatePlay::drawMap() {
@@ -51,6 +60,7 @@ void GameStatePlay::draw() {
 	for (int i = 0; i < (mapWidth*mapHeight); i++) {
 		gameengine->Gamewindow->draw(tilelist[i]);
 	}
+	gameengine->Gamewindow->draw(GameStatePlay::Box);
 	gameengine->Gamewindow->draw(GameStatePlay::Player);
 	gameengine->Gamewindow->display();
 }
@@ -82,27 +92,90 @@ void GameStatePlay::handleInput() {
 	}
 }
 
-bool GameStatePlay::checkMove(int move){
+bool GameStatePlay::checkPlayer(int move){
 	int i;
 	int j;
 	switch (move) {
 	case 1:
 		i = (Player.getPosition().x / tileSize) - 1;
 		j = (Player.getPosition().y / tileSize);
-		playertexture.loadFromFile("PNG/Character1.png");
 		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
 			std::cout << "Its a wall dumbass";
 			return false;
-		}else
-//		std::cout << "moveleft";
+		}else if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Box blocking way";
+			return false;
+		}
 		break;
 	case 2:
 		i = (Player.getPosition().x / tileSize);
 		j = (Player.getPosition().y / tileSize) - 1;
-		playertexture.loadFromFile("PNG/Character7.png");
 		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
 			std::cout << "Its a wall dumbass";
 			return false;
+		}else if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Box blocking way";
+			return false;
+		}
+			break;
+	case 3:
+		i = (Player.getPosition().x / tileSize) + 1;
+		j = (Player.getPosition().y / tileSize);
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}else if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Box blocking way";
+			return false;
+		}
+			break;
+	case 4:
+		i = (Player.getPosition().x / tileSize);
+		j = (Player.getPosition().y / tileSize) + 1;
+		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+			std::cout << "Its a wall dumbass";
+			return false;
+		}else if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Box blocking way";
+			return false;
+		}
+		break;
+	}
+	return true;
+}
+
+bool GameStatePlay::checkBox(int move) {
+	int i;
+	int j;
+	switch (move) {
+	case 1:
+		i = (Player.getPosition().x / tileSize) - 1;
+		j = (Player.getPosition().y / tileSize);
+		if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Its a box";
+			i = (Box.getPosition().x / tileSize) - 1;
+			j = (Box.getPosition().y / tileSize);
+			if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+				std::cout << "Wall blocking box";
+				return false;			
+			}
+			return true;
+		}
+		else
+			//		std::cout << "moveleft";
+			break;
+	case 2:
+		i = (Player.getPosition().x / tileSize);
+		j = (Player.getPosition().y / tileSize) - 1;
+		if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Its a box";
+			i = (Box.getPosition().x / tileSize);
+			j = (Box.getPosition().y / tileSize) - 1;
+			if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+				std::cout << "Wall blocking box";
+				return false;
+			}
+			return true;
 		}
 		else
 			//		std::cout << "moveup";
@@ -110,10 +183,15 @@ bool GameStatePlay::checkMove(int move){
 	case 3:
 		i = (Player.getPosition().x / tileSize) + 1;
 		j = (Player.getPosition().y / tileSize);
-		playertexture.loadFromFile("PNG/Character2.png");
-		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
-			std::cout << "Its a wall dumbass";
-			return false;
+		if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Its a box";
+			i = (Box.getPosition().x / tileSize) + 1;
+			j = (Box.getPosition().y / tileSize);
+			if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+				std::cout << "Wall blocking box";
+				return false;
+			}
+			return true;
 		}
 		else
 			//		std::cout << "moveright";
@@ -121,43 +199,69 @@ bool GameStatePlay::checkMove(int move){
 	case 4:
 		i = (Player.getPosition().x / tileSize);
 		j = (Player.getPosition().y / tileSize) + 1;
-		playertexture.loadFromFile("PNG/Character4.png");
-		if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
-			std::cout << "Its a wall dumbass";
-			return false;
+		if (Box.getPosition().x / tileSize == i & Box.getPosition().y / tileSize == j) {
+			std::cout << "Its a box";
+			i = (Box.getPosition().x / tileSize);
+			j = (Box.getPosition().y / tileSize) + 1;
+			if (tilelist[(8 * i) + j].getTexture() == &walltexture) {
+				std::cout << "Wall blocking box";
+				return false;
+			}
+			return true;
 		}
 		else
 			//		std::cout << "movedown";
 			break;
 	}
-	return true;
-}
+	return false;
 
-void GameStatePlay::moveBox()
-{
 }
 
 void GameStatePlay::handleMovement(sf::Event event) {
 	switch (event.key.code) {
 	case sf::Keyboard::A:
-		if (checkMove(1) == false) {}
-		else
+		if (checkBox(1) == true) {
+			playertexture.loadFromFile("PNG/Character1.png");
+			Box.move(-1 * tileSize, 0.0f);
 			Player.move(-1 * tileSize, 0.0f);
+		}
+		else if (checkPlayer(1) == true) {
+			Player.move(-1 * tileSize, 0.0f);
+			playertexture.loadFromFile("PNG/Character1.png");
+		}
 		break;
 	case sf::Keyboard::W:
-		if (checkMove(2) == false) {}
-		else
-		Player.move(0.0f, -1 * tileSize);
+		if (checkBox(2) == true) {
+			playertexture.loadFromFile("PNG/Character7.png");
+			Box.move(0.0f, -1 * tileSize);
+			Player.move(0.0f, -1 * tileSize);
+		}
+		else if (checkPlayer(2) == true) {
+			Player.move(0.0f, -1 * tileSize);
+			playertexture.loadFromFile("PNG/Character7.png");
+		}
 		break;
 	case sf::Keyboard::D:
-		if (checkMove(3) == false) {}
-		else
+		if (checkBox(3) == true) {
+			playertexture.loadFromFile("PNG/Character2.png");
+			Box.move(tileSize, 0.0f);
 			Player.move(tileSize, 0.0f);
+		}
+		else if (checkPlayer(3) == true) {
+			Player.move(tileSize, 0.0f);
+			playertexture.loadFromFile("PNG/Character2.png");
+		}
 		break;
 	case sf::Keyboard::S:
-		if (checkMove(4) == false) {}
-		else
+		if (checkBox(4) == true) {
+			playertexture.loadFromFile("PNG/Character4.png");
+			Box.move(0.0f, tileSize);
 			Player.move(0.0f, tileSize);
+		}
+		else if (checkPlayer(4) == true){
+			Player.move(0.0f, tileSize);
+			playertexture.loadFromFile("PNG/Character4.png");
+		}
 		break;
 	}
 }
@@ -175,5 +279,6 @@ GameStatePlay::GameStatePlay(Gameengine* game) {
 	this->view.setCenter(pos * zoom);
 
 	createPlayer();
+	createBox();
 	drawMap();
 }
